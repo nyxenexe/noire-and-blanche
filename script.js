@@ -4,16 +4,20 @@
     'use strict';
 
     // dom refs
-    const navbar = document.querySelector('.navbar');
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    const hero = document.querySelector('.hero');
-    const heroBg = document.querySelector('.hero-bg');
-    const allNavAnchors = document.querySelectorAll('.nav-links a');
-    const allSections = document.querySelectorAll('section[id]');
+    const navbar       = document.querySelector('.navbar');
+    const navToggle    = document.getElementById('navToggle');
+    const navLinks     = document.getElementById('navLinks');
+    const navOverlay   = document.getElementById('navOverlay');
+    const heroBg       = document.querySelector('.hero-bg');
+    const allSections  = document.querySelectorAll('section[id]');
+    const allAnchors   = document.querySelectorAll('.nav-links a');
 
-    const MOBILE_BREAKPOINT = 768;
-    const NAV_HEIGHT = 80;
+    const NAV_HEIGHT      = 80;
+    const MOBILE_BP       = 768;
+    const NAV_DURATION_MS = 250;
+
+    let isMobileNavOpen = false;
+    let toggleFocusedBeforeOpen = null;
 
     // 1. page load
     window.addEventListener('load', function() {
@@ -21,38 +25,90 @@
     });
 
     // copyright year
-    const footerText = document.querySelector('.footer-bottom p:first-child');
-    if (footerText && !footerText.textContent.includes('Lekki')) {
-        footerText.textContent = `© ${new Date().getFullYear()} Noire & Blanche. All rights reserved.`;
+    const footerP = document.querySelector('.footer-bottom p:first-child');
+    if (footerP && !footerP.textContent.includes('Lekki')) {
+        footerP.textContent = `© ${new Date().getFullYear()} Noire & Blanche. All rights reserved.`;
     }
 
-    // 2. mobile nav toggle
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            navToggle.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // close on link click
-        allNavAnchors.forEach(link => {
-            link.addEventListener('click', closeMobileNav);
-        });
-
-        // close on escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                closeMobileNav();
+    // 2. mobile nav manager
+    const nav = {
+        open() {
+            if (isMobileNavOpen) return;
+            isMobileNavOpen = true;
+            navLinks.classList.add('active');
+            navOverlay.classList.add('active');
+            navToggle.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            navToggle.setAttribute('aria-expanded', 'true');
+            navOverlay.setAttribute('aria-hidden', 'false');
+            toggleFocusedBeforeOpen = document.activeElement;
+            // trap focus immediately so fast tab users can't escape
+            this._trapFocus();
+        },
+        close() {
+            if (!isMobileNavOpen) return;
+            isMobileNavOpen = false;
+            this._releaseFocusTrap();
+            navLinks.classList.remove('active');
+            navOverlay.classList.remove('active');
+            navToggle.classList.remove('active');
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+            navOverlay.setAttribute('aria-hidden', 'true');
+            if (toggleFocusedBeforeOpen) {
+                navToggle.focus({ preventScroll: true });
             }
-        });
+            toggleFocusedBeforeOpen = null;
+        },
+        toggle() {
+            isMobileNavOpen ? this.close() : this.open();
+        },
+        _trapFocus() {
+            const focusable = navLinks.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last  = focusable[focusable.length - 1];
+            const onKeydown = (e) => {
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) {
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else {
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            };
+            this._focusTrapCleanup = () => document.removeEventListener('keydown', onKeydown);
+            document.addEventListener('keydown', onKeydown);
+            first.focus({ preventScroll: true });
+        },
+        _releaseFocusTrap() {
+            if (this._focusTrapCleanup) {
+                this._focusTrapCleanup();
+                this._focusTrapCleanup = null;
+            }
+        }
+    };
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => nav.toggle());
     }
 
-    function closeMobileNav() {
-        if (!navLinks || !navToggle) return;
-        navLinks.classList.remove('active');
-        navToggle.classList.remove('active');
-        document.body.style.overflow = '';
+    if (navOverlay) {
+        navOverlay.addEventListener('click', () => nav.close());
     }
+
+    allAnchors.forEach(link => link.addEventListener('click', () => nav.close()));
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMobileNavOpen) nav.close();
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth > MOBILE_BP && isMobileNavOpen) nav.close();
+        }, 100);
+    });
 
     // 3. smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -89,16 +145,22 @@
         }
 
         // active nav highlighting
-        if (allSections.length && allNavAnchors.length) {
+        if (allSections.length && allAnchors.length) {
             let current = '';
             allSections.forEach(section => {
                 if (scrollY >= section.offsetTop - 200) {
                     current = section.getAttribute('id');
                 }
             });
-            allNavAnchors.forEach(link => {
+            allAnchors.forEach(link => {
                 const linked = link.getAttribute('href').slice(1);
-                link.classList.toggle('active', linked === current);
+                const isActive = linked === current;
+                link.classList.toggle('active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
             });
         }
 

@@ -10,19 +10,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body>
     <!-- nav -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Main navigation">
         <div class="nav-container">
             <div class="logo">
                 <h1>Noire & Blanche</h1>
             </div>
-            <div class="nav-toggle" id="navToggle">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -33,6 +35,7 @@
             </ul>
         </div>
     </nav>
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
     <!-- hero -->
     <section id="home" class="hero">
@@ -365,37 +368,37 @@
             <h2>Gallery</h2>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="/images/cafeinterior.jpg"alt="Café interior with warm lighting" loading="lazy">
+                    <img src="images/cafeinterior.jpg" alt="Café interior with warm lighting" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Interior Design</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/latteart.jpg" alt="Latte art" loading="lazy">
+                    <img src="images/latteart.jpg" alt="Latte art" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Latte Art</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/marblecounter.jpg" data-full="/images/marblecounter.jpg" alt="Marble counter with coffee setup" loading="lazy">
+                    <img src="images/marblecounter.jpg" data-full="images/marblecounter.jpg" alt="Marble counter with coffee setup" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Marble Counter</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/freshpastries.jpg" data-full="/images/freshpastries.jpg" alt="Fresh pastries and croissants" loading="lazy">
+                    <img src="images/freshpastries.jpg" data-full="images/freshpastries.jpg" alt="Fresh pastries and croissants" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Fresh Pastries</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/amiembent.jpg" data-full="/images/ambientlighting.jpg" alt="Café ambient pendant lighting" loading="lazy">
+                    <img src="images/amiembent.jpg" alt="Café ambient pendant lighting" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Ambient Lighting</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/creativeSpace.jpg" data-full="/images/creativeSpace.jpg" alt="Workspace for creatives" loading="lazy">
+                    <img src="images/creativespace.jpg" alt="Workspace for creatives" loading="lazy">
                     <div class="gallery-overlay">
                         <p>Creative Space</p>
                     </div>
@@ -414,11 +417,11 @@
                             <div class="gallery-overlay"><p>Cappuccino</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/cof.jpg" alt="Espresso shot being pulled" loading="lazy">
+                            <img src="images/cof.jpg" alt="Espresso shot being pulled" loading="lazy">
                             <div class="gallery-overlay"><p>Espresso</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/cooffe.jpg" alt="Coffee beans and grounds" loading="lazy">
+                            <img src="images/cooffe.jpg" alt="Coffee beans and grounds" loading="lazy">
                             <div class="gallery-overlay"><p>Our Beans</p></div>
                         </div>
                     </div>
@@ -428,15 +431,15 @@
                     <h3 class="gallery-category-title">Pastries</h3>
                     <div class="gallery-grid gallery-grid--expanded">
                         <div class="gallery-item">
-                            <img src="/images/passte.jpg" alt="Fresh croissants on display" loading="lazy">
+                            <img src="images/passte.jpg" alt="Fresh croissants on display" loading="lazy">
                             <div class="gallery-overlay"><p>Doughnuts</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/art.jpg" alt="Artisan cakes and tarts" loading="lazy">
+                            <img src="images/art.jpg" alt="Artisan cakes and tarts" loading="lazy">
                             <div class="gallery-overlay"><p>Artisan Cakes</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/cookies.jpg" alt="Assorted pastry display" loading="lazy">
+                            <img src="images/cookies.jpg" alt="Assorted pastry display" loading="lazy">
                             <div class="gallery-overlay"><p>Cookies</p></div>
                         </div>
                     </div>
@@ -446,15 +449,15 @@
                     <h3 class="gallery-category-title">Interior &amp; Ambience</h3>
                     <div class="gallery-grid gallery-grid--expanded">
                         <div class="gallery-item">
-                            <img src="/images/counter view.jpg" alt="Cozy café seating area" loading="lazy">
+                            <img src="images/counter-view.jpg" alt="Cozy café seating area" loading="lazy">
                             <div class="gallery-overlay"><p>Seating Area</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/pendat.jpg" alt="Warm pendant lighting over table" loading="lazy">
+                            <img src="images/pendat.jpg" alt="Warm pendant lighting over table" loading="lazy">
                             <div class="gallery-overlay"><p>Pendant Lighting</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/seatingarea.jpg" alt="Counter and barista workspace" loading="lazy">
+                            <img src="images/seatingarea.jpg" alt="Counter and barista workspace" loading="lazy">
                             <div class="gallery-overlay"><p>Counter View</p></div>
                         </div>
                     </div>
@@ -464,11 +467,11 @@
                     <h3 class="gallery-category-title">Milkshakes</h3>
                     <div class="gallery-grid gallery-grid--expanded">
                         <div class="gallery-item">
-                            <img src="/images/choco shake.jpg" alt="Chocolate milkshake" loading="lazy">
+                            <img src="images/choco-shake.jpg" alt="Chocolate milkshake" loading="lazy">
                             <div class="gallery-overlay"><p>Chocolate Shake</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/strawbrerry.jpg" alt="Strawberry milkshake" loading="lazy">
+                            <img src="images/strawbrerry.jpg" alt="Strawberry milkshake" loading="lazy">
                             <div class="gallery-overlay"><p>Strawberry Shake</p></div>
                         </div>
                     </div>
@@ -479,29 +482,19 @@
                     <h3 class="gallery-category-title">Dinner Plates</h3>
                     <div class="gallery-grid gallery-grid--expanded">
                         <div class="gallery-item">
-                            <img src="/images/A Moment Between Bites.jpg" alt="A Moment Between Bites" loading="lazy">
+                            <img src="images/a-moment-between-bites.jpg" alt="A Moment Between Bites" loading="lazy">
                             <div class="gallery-overlay"><p>A Moment Between Bites</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/Pastry Spread, Table for One.jpg" alt="Pastry Spread, Table for One" loading="lazy">
+                            <img src="images/pastry-spread-table-for-one.jpg" alt="Pastry Spread, Table for One" loading="lazy">
                             <div class="gallery-overlay"><p>Pastry Spread, Table for One</p></div>
                         </div>
                         <div class="gallery-item">
-                            <img src="/images/Work Well Fueled.jpg" alt="Work Well Fueled" loading="lazy">
+                            <img src="images/work-well-fueled.jpg" alt="Work Well Fueled" loading="lazy">
                             <div class="gallery-overlay"><p>Work Well Fueled</p></div>
                         </div>
-                        <div class="gallery-item">
-                            <img src="/images/Fresh From the Oven.jpg" alt="Fresh From the Oven" loading="lazy">
-                            <div class="gallery-overlay"><p>Fresh From the Oven</p></div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="/images/dinner-plate-5.jpg" alt="Vegan Pita Sandwich" loading="lazy">
-                            <div class="gallery-overlay"><p>Vegan Pita Sandwich</p></div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="/images/dinner-plate-6.jpg" alt="Caesar Salad" loading="lazy">
-                            <div class="gallery-overlay"><p>Caesar Salad</p></div>
-                        </div>
+                        
+
                     </div>
                 </div>
 
@@ -537,6 +530,7 @@
                     <p class="review-author">— Emeka Nwosu</p>
                 </div>
         </div>
+        </div>
     </section>
 
     <!-- location -->
@@ -563,7 +557,7 @@
                         <ul>
                             <li>Dine-in</li>
                             <li>Kerbside Pickup</li>
-                            <li>No-contact Delivery</li>
+                           
                         </ul>
                     </div>
 
