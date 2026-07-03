@@ -8,6 +8,7 @@
     const navToggle    = document.getElementById('navToggle');
     const navLinks     = document.getElementById('navLinks');
     const navOverlay   = document.getElementById('navOverlay');
+    const navCloseBtn  = document.getElementById('navCloseBtn');
     const heroBg       = document.querySelector('.hero-bg');
     const allSections  = document.querySelectorAll('section[id]');
     const allAnchors   = document.querySelectorAll('.nav-links a');
@@ -42,8 +43,7 @@
             navToggle.setAttribute('aria-expanded', 'true');
             navOverlay.setAttribute('aria-hidden', 'false');
             toggleFocusedBeforeOpen = document.activeElement;
-            // trap focus immediately so fast tab users can't escape
-            this._trapFocus();
+            setTimeout(() => this._trapFocus(), 100);
         },
         close() {
             if (!isMobileNavOpen) return;
@@ -64,7 +64,9 @@
             isMobileNavOpen ? this.close() : this.open();
         },
         _trapFocus() {
-            const focusable = navLinks.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+            const focusable = navLinks.querySelectorAll(
+                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
             if (!focusable.length) return;
             const first = focusable[0];
             const last  = focusable[focusable.length - 1];
@@ -96,6 +98,11 @@
         navOverlay.addEventListener('click', () => nav.close());
     }
 
+    if (navCloseBtn) {
+        navCloseBtn.addEventListener('click', () => nav.close());
+    }
+
+    // close on nav link click
     allAnchors.forEach(link => link.addEventListener('click', () => nav.close()));
 
     document.addEventListener('keydown', (e) => {
