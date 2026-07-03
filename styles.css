@@ -680,7 +680,7 @@ p {
 }
 
 .menu h2 {
-    color: var(--color-ivory);
+    color: #D4AF37;
     position: relative;
     display: inline-block;
 }
@@ -702,12 +702,12 @@ p {
 
 .menu-subtitle {
     text-align: center;
-    color: var(--color-text-cream-soft);
+    color: #6B5B4B;
     font-size: 0.9rem;
     margin-bottom: 4rem;
     font-family: var(--font-heading);
     font-style: italic;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0.05em;
     position: relative;
     max-width: 420px;
